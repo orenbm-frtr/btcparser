@@ -37,7 +37,7 @@ class Input(object):
         return cls(hex_)
 
     def __repr__(self):
-        return "Input(%s,%d)" % (self.transaction_hash, self.transaction_index)
+        return "%s,%d" % (self.transaction_hash, self.transaction_index)
 
     @property
     def transaction_hash(self):
@@ -53,6 +53,8 @@ class Input(object):
         redeemed by this input"""
         if self._transaction_index is None:
             self._transaction_index = decode_uint32(self.hex[32:36])
+        else
+            self._transaction_index = 0
         return self._transaction_index
 
     @property
