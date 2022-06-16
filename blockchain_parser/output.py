@@ -34,7 +34,7 @@ class Output(object):
         return cls(hex_)
 
     def __repr__(self):
-        return %d % self.value
+        return """%d""" % self.value
     
     @property
     def value(self):
