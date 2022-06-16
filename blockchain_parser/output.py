@@ -35,10 +35,6 @@ class Output(object):
 
     def __repr__(self):
         return "%d" % self.value
-
-    def values(self):
-        return "%s" % self.value
-
     
     @property
     def value(self):
