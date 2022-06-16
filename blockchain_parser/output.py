@@ -34,9 +34,6 @@ class Output(object):
         return cls(hex_)
 
     def __repr__(self):
-        return "Output(satoshis=%d)" % self.value
-    
-    def values(self):
         return "%d" % self.value
 
     @property
