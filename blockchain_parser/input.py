@@ -18,7 +18,6 @@ class Input(object):
 
     def __init__(self, raw_hex):
         self._transaction_hash = None
-        self._transaction_index = None
         self._script = None
         self._sequence_number = None
         self._witnesses = []
@@ -37,7 +36,7 @@ class Input(object):
         return cls(hex_)
 
     def __repr__(self):
-        return "%s,%d" % (self.transaction_hash, self.transaction_index)
+        return "%s" % (self.transaction_hash)
 
     @property
     def transaction_hash(self):
@@ -46,14 +45,6 @@ class Input(object):
         if self._transaction_hash is None:
             self._transaction_hash = format_hash(self.hex[:32])
         return self._transaction_hash
-
-    @property
-    def transaction_index(self):
-        """Returns the index of the output inside the transaction that is
-        redeemed by this input"""
-        if self._transaction_index is None:
-            self._transaction_index = decode_uint32(self.hex[32:36])
-        return self._transaction_index
 
     @property
     def sequence_number(self):
