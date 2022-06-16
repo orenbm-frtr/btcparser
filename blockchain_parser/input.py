@@ -53,8 +53,6 @@ class Input(object):
         redeemed by this input"""
         if self._transaction_index is None:
             self._transaction_index = decode_uint32(self.hex[32:36])
-        else
-            self._transaction_index = 0
         return self._transaction_index
 
     @property
