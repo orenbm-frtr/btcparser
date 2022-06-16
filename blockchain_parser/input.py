@@ -36,7 +36,7 @@ class Input(object):
         return cls(hex_)
 
     def __repr__(self):
-        return "'%s'" % (self.transaction_hash)
+        return "'%s" % (self.transaction_hash)
 
     @property
     def transaction_hash(self):
