@@ -25,7 +25,7 @@ class Address(object):
         self._segwit_version = segwit_version
 
     def __repr__(self):
-        return "Address(addr=%s)" % self.address
+        return "%s" % self.address
 
     @classmethod
     def from_public_key(cls, public_key):
