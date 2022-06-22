@@ -98,7 +98,30 @@ class Input(object):
             elif self.type == "p2wsh":
                 address = Address.from_bech32(self.script.operations[1], 0)
                 self._addresses.append(address)
-      
+     
+    def is_return(self):
+        return self.script.is_return()
+
+    def is_p2sh(self):
+        return self.script.is_p2sh()
+
+    def is_pubkey(self):
+        return self.script.is_pubkey()
+
+    def is_pubkeyhash(self):
+        return self.script.is_pubkeyhash()
+
+    def is_multisig(self):
+        return self.script.is_multisig()
+
+    def is_unknown(self):
+        return self.script.is_unknown()
+
+    def is_p2wpkh(self):
+        return self.script.is_p2wpkh()
+
+    def is_p2wsh(self):
+        return self.script.is_p2wsh()
     
     @property
     def type(self):
