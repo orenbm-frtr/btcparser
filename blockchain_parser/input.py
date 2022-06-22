@@ -21,6 +21,8 @@ class Input(object):
         self._script = None
         self._sequence_number = None
         self._witnesses = []
+        self._addresses
+        self.addresses
 
         self._script_length, varint_length = decode_varint(raw_hex[36:])
         self._script_start = 36 + varint_length
@@ -67,3 +69,31 @@ class Input(object):
     def witnesses(self):
         """Return a list of witness data attached to this input, empty if non segwit"""
         return self._witnesses
+    
+    @property
+    def addresses(self):
+        """Returns a list containing all the addresses mentioned
+        in the input's script
+        """
+        if self._addresses is None:
+            self._addresses = []
+            if self.type == "pubkey":
+                address = Address.from_public_key(self.script.operations[0])
+                self._addresses.append(address)
+            elif self.type == "pubkeyhash":
+                address = Address.from_ripemd160(self.script.operations[2])
+                self._addresses.append(address)
+            elif self.type == "p2sh":
+                address = Address.from_ripemd160(self.script.operations[1],
+                                                 type="p2sh")
+                self._addresses.append(address)
+            elif self.type == "multisig":
+                n = self.script.operations[-2]
+                for operation in self.script.operations[1:1+n]:
+                    self._addresses.append(Address.from_public_key(operation))
+            elif self.type == "p2wpkh":
+                address = Address.from_bech32(self.script.operations[1], 0)
+                self._addresses.append(address)
+            elif self.type == "p2wsh":
+                address = Address.from_bech32(self.script.operations[1], 0)
+                self._addresses.append(address)
