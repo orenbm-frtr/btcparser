@@ -11,6 +11,7 @@
 
 from .utils import decode_varint, decode_uint32, format_hash
 from .script import Script
+from .address import Address
 
 
 class Input(object):
