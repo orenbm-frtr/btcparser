@@ -30,6 +30,7 @@ class Input(object):
 
         self.size = self._script_start + self._script_length + 4
         self.hex = raw_hex[:self.size]
+        self._value_hex = raw_hex[:8]
 
     def add_witness(self, witness):
         self._witnesses.append(witness)
