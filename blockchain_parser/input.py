@@ -21,8 +21,7 @@ class Input(object):
         self._script = None
         self._sequence_number = None
         self._witnesses = []
-        self._addresses
-        self.addresses
+        self._addresses = None
 
         self._script_length, varint_length = decode_varint(raw_hex[36:])
         self._script_start = 36 + varint_length
