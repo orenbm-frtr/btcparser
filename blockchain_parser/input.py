@@ -39,7 +39,7 @@ class Input(object):
         return cls(hex_)
 
     def __repr__(self):
-        return "'%s'" % (self.transaction_hash)
+        return "inp(%s, %s, %d)" % (self.transaction_hash, self.addresses, self.value)
 
     @property
     def transaction_hash(self):
