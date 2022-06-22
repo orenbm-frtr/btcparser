@@ -9,7 +9,7 @@
 # modified, propagated, or distributed except according to the terms contained
 # in the LICENSE file.
 
-from .utils import decode_varint, decode_uint32, format_hash
+from .utils import decode_varint, decode_uint32, format_hash, decode_uint64
 from .script import Script
 from .address import Address
 
@@ -23,6 +23,7 @@ class Input(object):
         self._sequence_number = None
         self._witnesses = []
         self._addresses = None
+        self._value = None
 
         self._script_length, varint_length = decode_varint(raw_hex[36:])
         self._script_start = 36 + varint_length
@@ -97,3 +98,42 @@ class Input(object):
             elif self.type == "p2wsh":
                 address = Address.from_bech32(self.script.operations[1], 0)
                 self._addresses.append(address)
+      
+    
+    @property
+    def type(self):
+        """Returns the output's script type as a string"""
+        # Fix for issue 11
+        if not self.script.script.is_valid():
+            return "invalid"
+
+        if self.is_pubkeyhash():
+            return "pubkeyhash"
+
+        if self.is_pubkey():
+            return "pubkey"
+
+        if self.is_p2sh():
+            return "p2sh"
+
+        if self.is_multisig():
+            return "multisig"
+
+        if self.is_return():
+            return "OP_RETURN"
+
+        if self.is_p2wpkh():
+            return "p2wpkh"
+
+        if self.is_p2wsh():
+            return "p2wsh"
+
+        return "unknown"
+
+    
+    @property
+    def value(self):
+        """Returns the value of the output expressed in satoshis"""
+        if self._value is None:
+            self._value = decode_uint64(self._value_hex)
+        return self._value
